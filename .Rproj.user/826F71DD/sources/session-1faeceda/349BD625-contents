@@ -1,0 +1,91 @@
+# Basic data operation with R studio
+
+# working with external data
+
+#Reading .csv file
+uni_sal<-read.csv("Salaries.csv")
+View(uni_sal)
+str(uni_sal)
+head(uni_sal)
+head(uni_sal,100)
+summary(uni_sal)
+tail(uni_sal,100)
+
+# writing .csv file
+
+write.csv(uni_sal,"Uni_sal.csv")
+
+# writing excel file
+
+#install.packages('xlsx')
+library('xlsx')
+write.xlsx(uni_sal,"Uni_sal.xlsx")
+
+#Reading excel file
+uni_Excel_sal<-read.xlsx("Uni_Sal.xlsx",sheetIndex = 1)
+str(uni_Excel_sal)
+
+#Alternative reading  and writing excel file
+install.packages('readxl')
+
+library('readxl')
+
+
+install.packages('writexl')
+library(writexl)
+
+write_xlsx(uni_Sal,"Uni_Sal2.xlsx")
+findFunction(write_xlsx)
+find.package("writexl")
+
+write.xlsx(uni_sal,"Uni_sal2.xlsx")
+str(uni_Excel_sal2)
+
+plot(uni_Excel_sal2$salary)
+
+#Data Set Binding with the environment
+
+attach(uni_Excel_sal2)
+plot(salary)
+summary(salary)
+
+#data set unbinding the environment
+detach(uni_sal)
+plot(Salaries)
+
+View(uni_Excel_sal2)
+
+#Data management further
+sal_A<-uni_Excel_sal2[,1:3] #DataSetName[rows,column]
+sal_B<-uni_Excel_sal2[,c(1,4,5)]
+sal_C<-uni_Excel_sal2[,c(1,6,7)]
+
+str(sal_A)
+str(sal_B)
+str(sal_C)
+
+View(sal_A)
+View(sal_B)
+View(sal_C)
+
+write.csv(sal_A,"sal_A.csv")
+write.csv(sal_B,"sal_B.csv")
+write.csv(sal_C,"sal_c.csv")
+
+
+#Column binding/Horizontal Binding /Merge columns
+
+#step1: import external data segment and assign to local objects()
+SalPart_A<-read.csv("sal_A.csv")
+SalPart_B<-read.csv("sal_B.csv")
+SalPart_c<-read.csv("sal_C.csv")
+
+#step2: Merge data object together to form ine data object
+set.seed(100)
+Sal_ABC<- merge(SalPart_A,SalPart_B,by=('X'))
+View(Sal_ABC)
+
+
+#Step 3 Export local merged data object in to a an external files
+
+
